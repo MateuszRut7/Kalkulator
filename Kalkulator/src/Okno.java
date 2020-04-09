@@ -22,29 +22,28 @@ public class Okno extends JFrame implements ActionListener  {
     JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
     static Okno okno = new Okno();
 
-    public static void main(String[] args) {
-        // rzeczy odpowiadajace za glupoty w stylu uzytkownik nie moze sam zmieniac wielkosci okienka
-        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        okno.setVisible(true);
-        okno.setLocationRelativeTo(null);
-        okno.setResizable(false);
-        okno.setLayout(null);
+    public void MenuB(){
+        menuPlik = new JMenu("Plik");
+        menuNarzedzia = new JMenu("Narzędzia");
+        menuPomoc = new JMenu("Pomoc");
+
+        setJMenuBar(menuBar);
+        menuBar.add(menuPlik);
+        menuBar.add(menuPomoc);
+        menuBar.add(menuNarzedzia);
+
+        mOtworz = new JMenuItem("Otwórz plik ");
+        mNarz1 = new JMenuItem("Narz1");
+        mNarz2 = new JMenuItem("Narz2");
+        mOprogramie = new JMenuItem("O programie");
+
+        menuPlik.add(mOtworz);
+        menuNarzedzia.add(mNarz1);
+        menuNarzedzia.add(mNarz2);
+        menuPomoc.add(mOprogramie);
     }
 
-    public Okno() {
-
-        // okienko
-
-        setSize(510, 450);
-        setTitle("Kalkulator");
-        setLayout(null);
-
-        wyswietlWynik.setBounds(35,20,400,50);
-        wyswietlWynik.setEditable(false);
-        wyswietlWynik.setFont(font);
-        add(wyswietlWynik);
-
-        // guziki liczb
+    public void Guziki(){
         for (byte i = 0; i < SLiczby.length; i++) {
             Bliczby[i] = new JButton(SLiczby[i]);
             add(Bliczby[i]);
@@ -80,29 +79,36 @@ public class Okno extends JFrame implements ActionListener  {
                 index2++;
             }
         //koniec guzikow
+    }
 
-        //menu
+    public static void main(String[] args) {
+        // rzeczy odpowiadajace za glupoty w stylu uzytkownik nie moze sam zmieniac wielkosci okienka
+        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        okno.setVisible(true);
+        okno.setLocationRelativeTo(null);
+        okno.setResizable(false);
+        okno.setLayout(null);
+    }
 
-        menuPlik = new JMenu("Plik");
-        menuNarzedzia = new JMenu("Narzędzia");
-        menuPomoc = new JMenu("Pomoc");
+    public Okno() {
 
-        setJMenuBar(menuBar);
-        menuBar.add(menuPlik);
-        menuBar.add(menuPomoc);
-        menuBar.add(menuNarzedzia);
+        setSize(510, 450);
+        setTitle("Kalkulator");
+        setLayout(null);
 
-        mOtworz = new JMenuItem("Otwórz plik ");
-        mNarz1 = new JMenuItem("Narz1");
-        mNarz2 = new JMenuItem("Narz2");
-        mOprogramie = new JMenuItem("O programie");
+        // wuswietla wynik
+        wyswietlWynik.setBounds(35,20,400,50);
+        wyswietlWynik.setEditable(false);
+        wyswietlWynik.setFont(font);
+        add(wyswietlWynik);
 
-        menuPlik.add(mOtworz);
-        menuNarzedzia.add(mNarz1);
-        menuNarzedzia.add(mNarz2);
-        menuPomoc.add(mOprogramie);
 
-        // koniec menu
+
+        // wywoluje metode Guziki
+        Guziki();
+
+        // wywoluje metode MenuB
+        MenuB();
     }
     
     // tutaj ustawiamy to co ma robic dany guzik itp
