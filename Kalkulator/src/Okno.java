@@ -110,12 +110,20 @@ public class Okno extends JFrame implements ActionListener  {
         // wywoluje metode MenuB
         MenuB();
     }
-    
+
+    private void oblicz(int i) {
+            if (wynik == "0") wynik = Bliczby[i].getText();
+            else
+                wynik += wynik = Bliczby[i].getText();
+            wyswietlWynik.setText(wynik);
+    }
     // tutaj ustawiamy to co ma robic dany guzik itp
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+
+        for (byte i = 0; i < 12; i++) if (source == Bliczby[i]) oblicz(i);
 
 
     }
