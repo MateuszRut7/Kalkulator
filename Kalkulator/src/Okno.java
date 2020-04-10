@@ -1,5 +1,9 @@
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,13 +14,13 @@ public class Okno extends JFrame implements ActionListener  {
     String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
     String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
     Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
-    Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.BLUE,Color.BLUE,Color.BLUE,};
+    Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
     JButton[] Bliczby = new JButton[12];
     JButton[] Bznaki = new JButton[8];
 
     Font font = new Font("System", Font.BOLD, 30);
-    String wynik = "0";
-    JTextField wyswietlWynik = new JTextField(wynik);
+    String Swynik = "0";
+    JTextField wyswietlWynik = new JTextField(Swynik);
     JMenuBar menuBar = new JMenuBar();
     JMenu menuPlik, menuNarzedzia, menuPomoc;
     JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
@@ -111,11 +115,37 @@ public class Okno extends JFrame implements ActionListener  {
         MenuB();
     }
 
-    private void oblicz(int i) {
-            if (wynik == "0") wynik = Bliczby[i].getText();
+    private void wstawLiczby(int i) {
+            if (Swynik == "0") Swynik = Bliczby[i].getText();
             else
-                wynik += wynik = Bliczby[i].getText();
-            wyswietlWynik.setText(wynik);
+                Swynik += Swynik = Bliczby[i].getText();
+            wyswietlWynik.setText(Swynik);
+    }
+
+
+    private void wstawZnaki(int i) throws ScriptException {
+        if (kolorZ[i] == Color.BLUE && Swynik.length() < 8) {
+            if (Swynik == "0") Swynik = Bznaki[i].getText();
+            else
+                Swynik += Swynik = Bznaki[i].getText();
+            wyswietlWynik.setText(Swynik);}
+        else if (i == 3) {
+            Swynik = "0";
+            wyswietlWynik.setText(Swynik);
+            }
+        else if(i == 5){
+                Swynik = Oblicz(Swynik);
+
+                wyswietlWynik.setText(Oblicz(Swynik));
+            }
+    }
+
+    private String Oblicz(String liczymy) throws ScriptException {
+        ScriptEngineManager sem = new ScriptEngineManager();
+        ScriptEngine engine = sem.getEngineByName("JavaScript");
+        Object wynik = engine.eval(Swynik);
+        liczymy = wynik.toString();
+        return liczymy;
     }
     // tutaj ustawiamy to co ma robic dany guzik itp
 
@@ -123,8 +153,14 @@ public class Okno extends JFrame implements ActionListener  {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        for (byte i = 0; i < 12; i++) if (source == Bliczby[i]) oblicz(i);
-
+        for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);
+        for (byte i = 0; i < Bznaki.length; i++) if (source == Bznaki[i]) {
+            try {
+                wstawZnaki(i);
+            } catch (ScriptException ex) {
+                ex.printStackTrace();
+            }
+        }
 
     }
 
