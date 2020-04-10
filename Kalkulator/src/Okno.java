@@ -3,14 +3,12 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Okno extends JFrame implements ActionListener  {
 
     // ustawiamy zmienne itp
-    long liczba1, liczba2;
     String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
     String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
     Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
@@ -116,15 +114,28 @@ public class Okno extends JFrame implements ActionListener  {
     }
 
     private void wstawLiczby(int i) {
+        if (kolorL[i] == Color.BLACK ) {
             if (Swynik == "0") Swynik = Bliczby[i].getText();
             else
                 Swynik += Swynik = Bliczby[i].getText();
             wyswietlWynik.setText(Swynik);
+        }
+        else if (i == 11) {
+            String SPi = Double.toString(Math.PI);
+            Swynik += Swynik = SPi;
+            wyswietlWynik.setText(Swynik);
+        }
+
+        else if (i == 9) {
+            String Se = Double.toString(Math.E);
+            Swynik += Swynik = Se;
+            wyswietlWynik.setText(Swynik);
+        }
     }
 
 
     private void wstawZnaki(int i) throws ScriptException {
-        if (kolorZ[i] == Color.BLUE && Swynik.length() < 8) {
+        if (kolorZ[i] == Color.BLUE ) {
             if (Swynik == "0") Swynik = Bznaki[i].getText();
             else
                 Swynik += Swynik = Bznaki[i].getText();
@@ -132,12 +143,11 @@ public class Okno extends JFrame implements ActionListener  {
         else if (i == 3) {
             Swynik = "0";
             wyswietlWynik.setText(Swynik);
-            }
+        }
         else if(i == 5){
-                Swynik = Oblicz(Swynik);
-
-                wyswietlWynik.setText(Oblicz(Swynik));
-            }
+            Swynik = Oblicz(Swynik);
+            wyswietlWynik.setText(Oblicz(Swynik));
+        }
     }
 
     private String Oblicz(String liczymy) throws ScriptException {
