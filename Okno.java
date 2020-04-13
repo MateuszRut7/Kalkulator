@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Okno extends JFrame implements ActionListener  {
 
@@ -15,14 +18,17 @@ public class Okno extends JFrame implements ActionListener  {
     Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
     JButton[] Bliczby = new JButton[12];
     JButton[] Bznaki = new JButton[8];
+    JButton Bprzypisz = new JButton();
 
     Font font = new Font("System", Font.BOLD, 30);
     String Swynik = "0";
+    String Sprzypisz = "0";
     JTextField wyswietlWynik = new JTextField(Swynik);
     JMenuBar menuBar = new JMenuBar();
     JMenu menuPlik, menuNarzedzia, menuPomoc;
     JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
     static Okno okno = new Okno();
+
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
@@ -35,6 +41,7 @@ public class Okno extends JFrame implements ActionListener  {
         menuBar.add(menuNarzedzia);
 
         mOtworz = new JMenuItem("Otwórz plik ");
+        mOtworz.addActionListener(this);
         mNarz1 = new JMenuItem("Narz1");
         mNarz2 = new JMenuItem("Narz2");
         mOprogramie = new JMenuItem("O programie");
@@ -122,14 +129,26 @@ public class Okno extends JFrame implements ActionListener  {
         }
         else if (i == 11) {
             String SPi = Double.toString(Math.PI);
-            Swynik += Swynik = SPi;
-            wyswietlWynik.setText(Swynik);
+            if (Swynik == "0"){
+                Swynik =SPi;
+                wyswietlWynik.setText(Swynik);
+            }
+            else{
+                Swynik += Swynik = SPi;
+                wyswietlWynik.setText(Swynik);
+            }
         }
 
         else if (i == 9) {
             String Se = Double.toString(Math.E);
-            Swynik += Swynik = Se;
-            wyswietlWynik.setText(Swynik);
+            if (Swynik == "0"){
+                Swynik =Se;
+                wyswietlWynik.setText(Swynik);
+            }
+            else{
+                Swynik += Swynik = Se;
+                wyswietlWynik.setText(Swynik);
+            }
         }
     }
 
@@ -162,6 +181,28 @@ public class Okno extends JFrame implements ActionListener  {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+
+        if(source == mOtworz){
+            JFileChooser fileChooser = new JFileChooser();
+            if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File plik = fileChooser.getSelectedFile();
+                JOptionPane.showMessageDialog(null,"Wybrany plik to" + plik.getAbsolutePath());
+                try {
+                    Scanner scanner = new Scanner(plik);
+                    Swynik = scanner.toString();
+                    System.out.println(Swynik);
+                    wyswietlWynik.setText(Swynik);
+                    wyswietlWynik.setText(String.valueOf(scanner));
+                    System.out.println(scanner);
+                    System.out.println(Swynik);
+
+                }
+                catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        }
 
         for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);
         for (byte i = 0; i < Bznaki.length; i++) if (source == Bznaki[i]) {
