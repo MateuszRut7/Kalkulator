@@ -178,31 +178,38 @@ public class Okno extends JFrame implements ActionListener  {
     }
     // tutaj ustawiamy to co ma robic dany guzik itp
 
+    private void Wczytacz(){
+        JFileChooser fileChooser = new JFileChooser();
+        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            File plik = fileChooser.getSelectedFile();
+            JOptionPane.showMessageDialog(null,"Wybrany plik to" + plik.getAbsolutePath());
+            try {
+                Scanner scanner = new Scanner(plik);
+                char[] x = scanner.next().toCharArray();
+                for (int i = 0; i <x.length ; i++) {
+                    if(x[i] != ' '){
+                        Swynik = new String(x);
+                        System.out.println(Swynik);
+                        wyswietlWynik.setText(Swynik);
+                        wyswietlWynik.setText(Swynik);
+                        System.out.println(scanner);
+                        System.out.println(Swynik);
+                    }
+                    else break;
+                }
+            }
+            catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if(source == mOtworz){
-            JFileChooser fileChooser = new JFileChooser();
-            if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                File plik = fileChooser.getSelectedFile();
-                JOptionPane.showMessageDialog(null,"Wybrany plik to" + plik.getAbsolutePath());
-                try {
-                    Scanner scanner = new Scanner(plik);
-                    Swynik = scanner.toString();
-                    System.out.println(Swynik);
-                    wyswietlWynik.setText(Swynik);
-                    wyswietlWynik.setText(String.valueOf(scanner));
-                    System.out.println(scanner);
-                    System.out.println(Swynik);
-
-                }
-                catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-        }
+        if(source == mOtworz) Wczytacz();
 
         for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);
         for (byte i = 0; i < Bznaki.length; i++) if (source == Bznaki[i]) {
@@ -214,6 +221,5 @@ public class Okno extends JFrame implements ActionListener  {
         }
 
     }
-
 
 }
