@@ -15,6 +15,7 @@ public class Widok extends JFrame  {
     protected static JButton[] Bliczby = new JButton[12];
     protected static JButton[] Bznaki = new JButton[8];
 
+    Kontroler k = new Kontroler();
 
     protected static Font font = new Font("System", Font.BOLD, 30);
     protected static String Swynik = "0";
@@ -36,7 +37,7 @@ public class Widok extends JFrame  {
         menuBar.add(menuNarzedzia);
 
         mOtworz = new JMenuItem("Otwórz plik ");
-        // mOtworz.addActionListener(this);  to do naprawienia
+        k.AkcjaMenuB();
         mNarz1 = new JMenuItem("Narz1");
         mNarz2 = new JMenuItem("Narz2");
         mOprogramie = new JMenuItem("O programie");
@@ -58,7 +59,6 @@ public class Widok extends JFrame  {
             Bznaki[i] = new JButton(Sznaki[i]);
             add(Bznaki[i]);
         }
-        Kontroler k = new Kontroler();
         k.AkcjaGuzik();
 
 

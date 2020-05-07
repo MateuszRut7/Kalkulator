@@ -10,6 +10,10 @@ public class Kontroler implements ActionListener {
         for (byte i = 0; i < Widok.Sznaki.length; i++) Widok.Bznaki[i].addActionListener(this);
     }
 
+    protected void AkcjaMenuB(){
+        Widok.mOtworz.addActionListener(this);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();

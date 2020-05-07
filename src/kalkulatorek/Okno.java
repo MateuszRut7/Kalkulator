@@ -1,29 +1,36 @@
 package kalkulatorek;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-
-public class Okno extends JFrame  {
+public class Okno extends JFrame implements ActionListener  {
 
     // ustawiamy zmienne itp
-    protected static String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
-    protected static String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
-    protected static Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
-    protected static Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
-    protected static JButton[] Bliczby = new JButton[12];
-    protected static JButton[] Bznaki = new JButton[8];
+    String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
+    String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
+    Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
+    Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
+    JButton[] Bliczby = new JButton[12];
+    JButton[] Bznaki = new JButton[8];
+    JButton Bprzypisz = new JButton();
 
-
-    protected static Font font = new Font("System", Font.BOLD, 30);
-    protected static String Swynik = "0";
-    protected static String Sprzypisz = "0";
-    protected static JTextField wyswietlWynik = new JTextField(Swynik);
-    protected static JMenuBar menuBar = new JMenuBar();
-    protected static JMenu menuPlik, menuNarzedzia, menuPomoc;
-    protected static JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
+    Font font = new Font("System", Font.BOLD, 30);
+    String Swynik = "0";
+    String Sprzypisz = "0";
+    JTextField wyswietlWynik = new JTextField(Swynik);
+    JMenuBar menuBar = new JMenuBar();
+    JMenu menuPlik, menuNarzedzia, menuPomoc;
+    JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
     static Okno okno = new Okno();
+
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
@@ -36,7 +43,7 @@ public class Okno extends JFrame  {
         menuBar.add(menuNarzedzia);
 
         mOtworz = new JMenuItem("Otwórz plik ");
-        // mOtworz.addActionListener(this);  to do naprawienia
+        mOtworz.addActionListener(this);
         mNarz1 = new JMenuItem("Narz1");
         mNarz2 = new JMenuItem("Narz2");
         mOprogramie = new JMenuItem("O programie");
@@ -51,15 +58,15 @@ public class Okno extends JFrame  {
         for (byte i = 0; i < SLiczby.length; i++) {
             Bliczby[i] = new JButton(SLiczby[i]);
             add(Bliczby[i]);
+            Bliczby[i].addActionListener(this);
         }
 
         // guziki znaków
         for (byte i = 0; i < Sznaki.length; i++) {
             Bznaki[i] = new JButton(Sznaki[i]);
             add(Bznaki[i]);
+            Bznaki[i].addActionListener(this);
         }
-        Kontroler k = new Kontroler();
-        k.AkcjaGuzik();
 
 
         // ustawia guziki liczb
@@ -85,6 +92,16 @@ public class Okno extends JFrame  {
         //koniec guzikow
     }
 
+    public static void main(String[] args) {
+        // rzeczy odpowiadajace za glupoty w stylu uzytkownik nie moze sam zmieniac wielkosci okienka
+        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        okno.setVisible(true);
+        okno.setLocationRelativeTo(null);
+        okno.setResizable(false);
+        okno.setLayout(null);
+        okno.getContentPane().setBackground(Color.RED);
+    }
+
     public Okno() {
 
         setSize(510, 450);
@@ -106,7 +123,7 @@ public class Okno extends JFrame  {
         MenuB();
     }
 
-    protected static void wstawLiczby(int i) {
+    private void wstawLiczby(int i) {
         if (kolorL[i] == Color.BLACK ) {
             if (Swynik == "0") Swynik = Bliczby[i].getText();
             else
@@ -139,7 +156,7 @@ public class Okno extends JFrame  {
     }
 
 
-    protected static void wstawZnaki(int i) throws ScriptException {
+    private void wstawZnaki(int i) throws ScriptException {
         if (kolorZ[i] == Color.BLUE ) {
             if (Swynik == "0") Swynik = Bznaki[i].getText();
             else
@@ -150,12 +167,62 @@ public class Okno extends JFrame  {
             wyswietlWynik.setText(Swynik);
         }
         else if(i == 5){
-            Swynik = Model.Oblicz(Swynik);
-            wyswietlWynik.setText(Model.Oblicz(Swynik));
+            Swynik = Oblicz(Swynik);
+            wyswietlWynik.setText(Oblicz(Swynik));
         }
     }
 
+    private String Oblicz(String liczymy) throws ScriptException {
+        ScriptEngineManager sem = new ScriptEngineManager();
+        ScriptEngine engine = sem.getEngineByName("JavaScript");
+        Object wynik = engine.eval(Swynik);
+        liczymy = wynik.toString();
+        return liczymy;
+    }
     // tutaj ustawiamy to co ma robic dany guzik itp
 
+    private void Wczytacz(){
+        JFileChooser fileChooser = new JFileChooser();
+        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            File plik = fileChooser.getSelectedFile();
+            JOptionPane.showMessageDialog(null,"Wybrany plik to" + plik.getAbsolutePath());
+            try {
+                Scanner scanner = new Scanner(plik);
+                char[] x = scanner.next().toCharArray();
+                for (int i = 0; i <x.length ; i++) {
+                    if(x[i] != ' '){
+                        Swynik = new String(x);
+                        System.out.println(Swynik);
+                        wyswietlWynik.setText(Swynik);
+                        wyswietlWynik.setText(Swynik);
+                        System.out.println(scanner);
+                        System.out.println(Swynik);
+                    }
+                    else break;
+                }
+            }
+            catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if(source == mOtworz) Wczytacz();
+
+        for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);
+        for (byte i = 0; i < Bznaki.length; i++) if (source == Bznaki[i]) {
+            try {
+                wstawZnaki(i);
+            } catch (ScriptException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
 
 }

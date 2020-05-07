@@ -22,6 +22,7 @@ public class Model {
                 Widok.Swynik = new String(x);
                 Widok.wyswietlWynik.setText(Widok.Swynik);
 
+                scanner.close();
             }
             catch (FileNotFoundException ex) {
                 ex.printStackTrace();
