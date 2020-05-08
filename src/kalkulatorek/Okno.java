@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Okno extends JFrame implements ActionListener  {
     // ustawiamy zmienne itp
     String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
-    String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
+    String[] Sznaki = { "+", " <=", "-","C ", "*", "= ", "/ ", "."};
     Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
     Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
     JButton[] Bliczby = new JButton[12];
@@ -151,6 +151,12 @@ public class Okno extends JFrame implements ActionListener  {
         else if(i == 5){
             Swynik = Oblicz(Swynik);
             wyswietlWynik.setText(Oblicz(Swynik));
+        }
+
+        else if(i ==1){
+            CharSequence actualValue = Swynik.subSequence(0, Swynik.length()-1);
+            Swynik= (String) actualValue;
+            wyswietlWynik.setText(Swynik);
         }
     }
 

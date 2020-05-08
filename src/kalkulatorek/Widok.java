@@ -9,7 +9,7 @@ public class Widok extends JFrame  {
 
     // ustawiamy zmienne itp
     protected static String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
-    protected static String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
+    protected static String[] Sznaki = { "+", "<=", "-","C ", "*", "= ", "/ ", "."};
     protected static Color[] kolorL = {Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.YELLOW,Color.BLACK,Color.YELLOW};
     protected static Color[] kolorZ = {Color.BLUE,Color.RED,Color.BLUE,Color.RED,Color.BLUE,Color.DARK_GRAY,Color.BLUE,Color.BLUE,};
     protected static JButton[] Bliczby = new JButton[12];
@@ -127,6 +127,12 @@ public class Widok extends JFrame  {
         else if(i == 5){
             Swynik = Model.Oblicz(Swynik);
             wyswietlWynik.setText(Model.Oblicz(Swynik));
+        }
+
+        else if(i ==1){
+            CharSequence actualValue = Swynik.subSequence(0, Swynik.length()-1);
+            Swynik= (String) actualValue;
+            wyswietlWynik.setText(Swynik);
         }
     }
 
