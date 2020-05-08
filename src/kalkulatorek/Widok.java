@@ -24,7 +24,6 @@ public class Widok extends JFrame  {
     protected static JMenuBar menuBar = new JMenuBar();
     protected static JMenu menuPlik, menuNarzedzia, menuPomoc;
     protected static JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
-    static Widok widok = new Widok();
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
