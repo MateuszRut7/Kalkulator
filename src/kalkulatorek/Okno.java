@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Okno extends JFrame implements ActionListener  {
-
     // ustawiamy zmienne itp
     String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
     String[] Sznaki = { " +", " <=", " -","C ", " *", "= ", "/ ", "."};
@@ -21,6 +20,9 @@ public class Okno extends JFrame implements ActionListener  {
     JButton[] Bliczby = new JButton[12];
     JButton[] Bznaki = new JButton[8];
     JButton Bprzypisz = new JButton();
+
+    JCheckBox zapRowna;
+
 
     Font font = new Font("System", Font.BOLD, 30);
     String Swynik = "0";
@@ -55,6 +57,10 @@ public class Okno extends JFrame implements ActionListener  {
     }
 
     public void Guziki(){
+        zapRowna = new JCheckBox("XYZ");
+        zapRowna.setBounds(450,30,20,20);
+        add(zapRowna);
+        zapRowna.addActionListener(this);
         for (byte i = 0; i < SLiczby.length; i++) {
             Bliczby[i] = new JButton(SLiczby[i]);
             add(Bliczby[i]);
@@ -124,35 +130,11 @@ public class Okno extends JFrame implements ActionListener  {
     }
 
     private void wstawLiczby(int i) {
-        if (kolorL[i] == Color.BLACK ) {
             if (Swynik == "0") Swynik = Bliczby[i].getText();
             else
                 Swynik += Swynik = Bliczby[i].getText();
             wyswietlWynik.setText(Swynik);
-        }
-        else if (i == 11) {
-            String SPi = Double.toString(Math.PI);
-            if (Swynik == "0"){
-                Swynik =SPi;
-                wyswietlWynik.setText(Swynik);
-            }
-            else{
-                Swynik += Swynik = SPi;
-                wyswietlWynik.setText(Swynik);
-            }
-        }
 
-        else if (i == 9) {
-            String Se = Double.toString(Math.E);
-            if (Swynik == "0"){
-                Swynik =Se;
-                wyswietlWynik.setText(Swynik);
-            }
-            else{
-                Swynik += Swynik = Se;
-                wyswietlWynik.setText(Swynik);
-            }
-        }
     }
 
 
@@ -172,10 +154,21 @@ public class Okno extends JFrame implements ActionListener  {
         }
     }
 
+
     private String Oblicz(String liczymy) throws ScriptException {
+        String Se = Double.toString(Math.E);
+        String actualValue = liczymy.replace("e", Se);
+        liczymy = actualValue;
+        System.out.println(liczymy);
+
+        String SPi = Double.toString(Math.PI);
+        String actualValue2 = liczymy.replace("π", SPi);
+        liczymy = actualValue2;
+        System.out.println(liczymy);
+
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine engine = sem.getEngineByName("JavaScript");
-        Object wynik = engine.eval(Swynik);
+        Object wynik = engine.eval(liczymy);
         liczymy = wynik.toString();
         return liczymy;
     }
@@ -212,6 +205,15 @@ public class Okno extends JFrame implements ActionListener  {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
+        if(source == zapRowna){
+            if (zapRowna.isSelected() == true){
+
+
+            }
+            else {
+
+            }
+        }
         if(source == mOtworz) Wczytacz();
 
         for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);

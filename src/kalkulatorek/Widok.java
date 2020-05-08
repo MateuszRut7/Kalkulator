@@ -107,35 +107,10 @@ public class Widok extends JFrame  {
     }
 
     protected static void wstawLiczby(int i) {
-        if (kolorL[i] == Color.BLACK ) {
-            if (Swynik == "0") Swynik = Bliczby[i].getText();
-            else
-                Swynik += Swynik = Bliczby[i].getText();
-            wyswietlWynik.setText(Swynik);
-        }
-        else if (i == 11) {
-            String SPi = Double.toString(Math.PI);
-            if (Swynik == "0"){
-                Swynik =SPi;
-                wyswietlWynik.setText(Swynik);
-            }
-            else{
-                Swynik += Swynik = SPi;
-                wyswietlWynik.setText(Swynik);
-            }
-        }
-
-        else if (i == 9) {
-            String Se = Double.toString(Math.E);
-            if (Swynik == "0"){
-                Swynik =Se;
-                wyswietlWynik.setText(Swynik);
-            }
-            else{
-                Swynik += Swynik = Se;
-                wyswietlWynik.setText(Swynik);
-            }
-        }
+        if (Swynik == "0") Swynik = Bliczby[i].getText();
+        else
+            Swynik += Swynik = Bliczby[i].getText();
+        wyswietlWynik.setText(Swynik);
     }
 
 

@@ -18,6 +18,7 @@ public class Kontroler implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
+
         if(source == Widok.mOtworz) Model.Wczytacz();
         System.out.println(Widok.Swynik);
 

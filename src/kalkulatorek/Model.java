@@ -32,7 +32,20 @@ public class Model {
     }
 
 
+
     protected static String Oblicz(String liczymy) throws ScriptException {
+        // odpowiada za podmiane e
+        String Se = Double.toString(Math.E);
+        String actualValue = liczymy.replace("e", Se);
+        liczymy = actualValue;
+
+
+        // odpowiada za podmiane pi
+        String SPi = Double.toString(Math.PI);
+        String actualValue2 = liczymy.replace("π", SPi);
+        liczymy = actualValue2;
+
+
         ScriptEngineManager sem = new ScriptEngineManager();
         ScriptEngine engine = sem.getEngineByName("JavaScript");
         Object wynik = engine.eval(liczymy);
