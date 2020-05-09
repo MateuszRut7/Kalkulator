@@ -23,7 +23,7 @@ public class Widok extends JFrame  {
     protected static JTextField wyswietlWynik = new JTextField(Swynik);
     protected static JMenuBar menuBar = new JMenuBar();
     protected static JMenu menuPlik, menuNarzedzia, menuPomoc;
-    protected static JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
+    protected static JMenuItem mOtworz,mNarzKolor, mNarz2, mOprogramie;
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
@@ -36,15 +36,16 @@ public class Widok extends JFrame  {
         menuBar.add(menuNarzedzia);
 
         mOtworz = new JMenuItem("Otwórz plik ");
-        k.AkcjaMenuB();
-        mNarz1 = new JMenuItem("Narz1");
+        mNarzKolor = new JMenuItem("zmiana koloru");
         mNarz2 = new JMenuItem("Narz2");
         mOprogramie = new JMenuItem("O programie");
 
         menuPlik.add(mOtworz);
-        menuNarzedzia.add(mNarz1);
+        menuNarzedzia.add(mNarzKolor);
         menuNarzedzia.add(mNarz2);
         menuPomoc.add(mOprogramie);
+
+        k.AkcjaMenuB();
     }
 
     public void Guziki(){
@@ -134,5 +135,6 @@ public class Widok extends JFrame  {
             wyswietlWynik.setText(Swynik);
         }
     }
+
 
 }

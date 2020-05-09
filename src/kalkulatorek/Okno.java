@@ -30,7 +30,7 @@ public class Okno extends JFrame implements ActionListener  {
     JTextField wyswietlWynik = new JTextField(Swynik);
     JMenuBar menuBar = new JMenuBar();
     JMenu menuPlik, menuNarzedzia, menuPomoc;
-    JMenuItem mOtworz, mNarz1, mNarz2, mOprogramie;
+    JMenuItem mOtworz, mNarzKolor, mNarz2, mOprogramie;
     static Okno okno = new Okno();
 
 
@@ -46,12 +46,13 @@ public class Okno extends JFrame implements ActionListener  {
 
         mOtworz = new JMenuItem("Otwórz plik ");
         mOtworz.addActionListener(this);
-        mNarz1 = new JMenuItem("Narz1");
+        mNarzKolor = new JMenuItem("mNarzKolor");
+        mNarzKolor.addActionListener(this);
         mNarz2 = new JMenuItem("Narz2");
         mOprogramie = new JMenuItem("O programie");
 
         menuPlik.add(mOtworz);
-        menuNarzedzia.add(mNarz1);
+        menuNarzedzia.add(mNarzKolor);
         menuNarzedzia.add(mNarz2);
         menuPomoc.add(mOprogramie);
     }
@@ -105,7 +106,6 @@ public class Okno extends JFrame implements ActionListener  {
         okno.setLocationRelativeTo(null);
         okno.setResizable(false);
         okno.setLayout(null);
-        okno.getContentPane().setBackground(Color.RED);
     }
 
     public Okno() {
@@ -220,7 +220,15 @@ public class Okno extends JFrame implements ActionListener  {
 
             }
         }
+
         if(source == mOtworz) Wczytacz();
+
+        if (source == mNarzKolor){
+
+            Color kolor = JColorChooser.showDialog(null,"Wybierz kolor",Color.WHITE);
+            okno.getContentPane().setBackground(kolor);
+
+        }
 
         for (byte i = 0; i < Bliczby.length; i++) if (source == Bliczby[i]) wstawLiczby(i);
         for (byte i = 0; i < Bznaki.length; i++) if (source == Bznaki[i]) {
