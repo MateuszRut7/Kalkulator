@@ -34,13 +34,26 @@ public class Model {
 
 
     protected static String Oblicz(String liczymy) throws ScriptException {
-        // odpowiada za podmiane e
+
+        // odpowiada za podmiane e oraz pi w zlym przypadku
+        for (int i = 0; i <10 ; i++) {
+            String Se = Double.toString(Math.E);
+            String actualValue = liczymy.replace(i+"e", i+"*"+Se);
+            liczymy = actualValue;
+
+            String SPi = Double.toString(Math.PI);
+            String actualValue2 = liczymy.replace(i+"π", i+"*"+SPi);
+            liczymy = actualValue2;
+
+
+        }
+        // odpowiada za podmiane e w normalnym przypadku
         String Se = Double.toString(Math.E);
         String actualValue = liczymy.replace("e", Se);
         liczymy = actualValue;
 
 
-        // odpowiada za podmiane pi
+        // odpowiada za podmiane pi w normalnym przypadku
         String SPi = Double.toString(Math.PI);
         String actualValue2 = liczymy.replace("π", SPi);
         liczymy = actualValue2;

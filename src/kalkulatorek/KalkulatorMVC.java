@@ -24,7 +24,6 @@ public class KalkulatorMVC {
                 widok.getContentPane().setBackground(kolor2);
             }
             System.out.println();
-            
 
         }
 
