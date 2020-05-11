@@ -22,7 +22,7 @@ public class Widok extends JFrame  {
     protected static JTextField wyswietlWynik = new JTextField(Swynik);
     protected static JMenuBar menuBar = new JMenuBar();
     protected static JMenu menuPlik, menuNarzedzia, menuPomoc;
-    protected static JMenuItem mOtworz,mNarzKolor, mNarzPrzypisz, mOprogramie;
+    protected static JMenuItem mOtworz,mNarzKolor, mNarzPrzypisz, mNarzKwadrat, mOprogramie;
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
@@ -38,16 +38,18 @@ public class Widok extends JFrame  {
         mNarzKolor = new JMenuItem("zmiana koloru");
         mNarzPrzypisz = new JMenuItem("Przypisz");
         mOprogramie = new JMenuItem("O programie");
+        mNarzKwadrat = new JMenuItem("liczenie dla funkcji kwadratowej");
 
         menuPlik.add(mOtworz);
         menuNarzedzia.add(mNarzKolor);
         menuNarzedzia.add(mNarzPrzypisz);
+        menuNarzedzia.add(mNarzKwadrat);
         menuPomoc.add(mOprogramie);
 
         k.AkcjaMenuB();
     }
 
-    public void Guziki(){
+    private void Guziki(){
         for (byte i = 0; i < SLiczby.length; i++) {
             Bliczby[i] = new JButton(SLiczby[i]);
             add(Bliczby[i]);

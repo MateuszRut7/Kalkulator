@@ -17,6 +17,7 @@ public class Kontroler implements ActionListener {
         Widok.mOtworz.addActionListener(this);
         Widok.mNarzKolor.addActionListener(this);
         Widok.mNarzPrzypisz.addActionListener(this);
+        Widok.mNarzKwadrat.addActionListener(this);
     }
 
     @Override
@@ -30,6 +31,8 @@ public class Kontroler implements ActionListener {
             KalkulatorMVC.pomocnicza = "kolor";
 
         }
+
+        if (source == Widok.mNarzKwadrat) new Kwadratowa();
 
         if(source == OknoPrzypisz.Bprzypisz) Widok.wstawPrzypisz();
 
