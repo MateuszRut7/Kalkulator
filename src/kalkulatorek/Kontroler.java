@@ -1,20 +1,22 @@
 package kalkulatorek;
 
 import javax.script.ScriptException;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class Kontroler implements ActionListener {
 
     protected void AkcjaGuzik(){
         for (byte i = 0; i < Widok.SLiczby.length; i++) Widok.Bliczby[i].addActionListener(this);
         for (byte i = 0; i < Widok.Sznaki.length; i++) Widok.Bznaki[i].addActionListener(this);
+        OknoPrzypisz.Bprzypisz.addActionListener(this);
     }
 
     protected void AkcjaMenuB(){
         Widok.mOtworz.addActionListener(this);
         Widok.mNarzKolor.addActionListener(this);
+        Widok.mNarzPrzypisz.addActionListener(this);
     }
 
     @Override
@@ -28,6 +30,10 @@ public class Kontroler implements ActionListener {
             KalkulatorMVC.pomocnicza = "kolor";
 
         }
+
+        if(source == OknoPrzypisz.Bprzypisz) Widok.wstawPrzypisz();
+
+        if(source == Widok.mNarzPrzypisz) new OknoPrzypisz();
 
         for (byte i = 0; i < Widok.Bliczby.length; i++) if (source == Widok.Bliczby[i]) Widok.wstawLiczby(i);
         for (byte i = 0; i < Widok.Bznaki.length; i++) if (source == Widok.Bznaki[i]) {

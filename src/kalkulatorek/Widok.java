@@ -17,13 +17,12 @@ public class Widok extends JFrame  {
 
     Kontroler k = new Kontroler();
 
-    protected static Font font = new Font("System", Font.BOLD, 30);
-    protected static String Swynik = "0";
-    protected static String Sprzypisz = "0";
+    private Font font = new Font("System", Font.BOLD, 30);
+    protected static String Swynik = "";
     protected static JTextField wyswietlWynik = new JTextField(Swynik);
     protected static JMenuBar menuBar = new JMenuBar();
     protected static JMenu menuPlik, menuNarzedzia, menuPomoc;
-    protected static JMenuItem mOtworz,mNarzKolor, mNarz2, mOprogramie;
+    protected static JMenuItem mOtworz,mNarzKolor, mNarzPrzypisz, mOprogramie;
 
     public void MenuB(){
         menuPlik = new JMenu("Plik");
@@ -37,12 +36,12 @@ public class Widok extends JFrame  {
 
         mOtworz = new JMenuItem("Otwórz plik ");
         mNarzKolor = new JMenuItem("zmiana koloru");
-        mNarz2 = new JMenuItem("Narz2");
+        mNarzPrzypisz = new JMenuItem("Przypisz");
         mOprogramie = new JMenuItem("O programie");
 
         menuPlik.add(mOtworz);
         menuNarzedzia.add(mNarzKolor);
-        menuNarzedzia.add(mNarz2);
+        menuNarzedzia.add(mNarzPrzypisz);
         menuPomoc.add(mOprogramie);
 
         k.AkcjaMenuB();
@@ -75,19 +74,27 @@ public class Widok extends JFrame  {
 
         // ustawia guziki znaków
         byte index2 = 0;
-        for (byte y = 0; y < 4; y++)
+        for (byte y = 0; y < 4; y++){
             for (byte x = 0; x < 2; x++) {
                 Bznaki[index2].setBounds(290 + (x * 85), 80 + (y * 75), 80, 70);
                 Bznaki[index2].setFont(font);
                 Bznaki[index2].setForeground(kolorZ[index2]);
                 index2++;
             }
+
+        }
+
+        // Przypisz////////////////////////////////////////////////////////////////////////////
+        OknoPrzypisz.Bprzypisz.setBounds(35,80+75*4,80*5+20,70);
+        OknoPrzypisz.Bprzypisz.setFont(font);
+        OknoPrzypisz.Bprzypisz.setForeground(Color.CYAN);
+        add(OknoPrzypisz.Bprzypisz);
         //koniec guzikow
     }
 
     public Widok() {
 
-        setSize(510, 450);
+        setSize(510, 530);
         setTitle("Kalkulator");
         setLayout(null);
 
@@ -104,6 +111,11 @@ public class Widok extends JFrame  {
 
         // wywoluje metode MenuB
         MenuB();
+    }
+
+    protected static void wstawPrzypisz(){
+        Swynik +=  OknoPrzypisz.Sprzypisz;
+        wyswietlWynik.setText(Swynik);
     }
 
     protected static void wstawLiczby(int i) {

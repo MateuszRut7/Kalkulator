@@ -34,27 +34,40 @@ public class Model {
 
 
     protected static String Oblicz(String liczymy) throws ScriptException {
+        String Se = Double.toString(Math.E);
+        String SPi = Double.toString(Math.PI);
+        Boolean flagaEPi = true;
+        char[] x = liczymy.toCharArray();
+        char[] znaczki = {'+','-','*','/'};
+        for (int i = 0; i <x.length ; i++) {
+                if(x[i] == 'e'){
+
+                        if (x[i-1] !='+' && x[i-1] !='-' && x[i-1] !='*' && x[i-1] !='/' && x[i-1] !='e' && x[i+1] !='+' && x[i+1] !='-' && x[i+1] !='*' && x[i+1] !='/' && x[i+1] !='e') {
+
+                            flagaEPi = false;
+                        }
+                }
+
+            }
+        if(flagaEPi) {
+            String actualValue = liczymy.replace("e", Se);
+            liczymy = actualValue;
+        }
 
         // odpowiada za podmiane e oraz pi w zlym przypadku
         for (int i = 0; i <10 ; i++) {
-            String Se = Double.toString(Math.E);
-            String actualValue = liczymy.replace(i+"e", i+"*"+Se);
-            liczymy = actualValue;
+            for (int j = 0; j <10 ; j++) {
+                String actualValue3 = liczymy.replace(i+"e"+j, "blad prosze pamietac o znakach");
 
-            String SPi = Double.toString(Math.PI);
-            String actualValue2 = liczymy.replace(i+"π", i+"*"+SPi);
-            liczymy = actualValue2;
+            }
+        }
 
+        for (int i = 0; i <10 ; i++) {
+            String actualValue = liczymy.replace(i+"e", "0");
+            String actualValue2 = liczymy.replace("e"+i, "0");
 
         }
-        // odpowiada za podmiane e w normalnym przypadku
-        String Se = Double.toString(Math.E);
-        String actualValue = liczymy.replace("e", Se);
-        liczymy = actualValue;
-
-
         // odpowiada za podmiane pi w normalnym przypadku
-        String SPi = Double.toString(Math.PI);
         String actualValue2 = liczymy.replace("π", SPi);
         liczymy = actualValue2;
 

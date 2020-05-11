@@ -23,6 +23,7 @@ public class KalkulatorMVC {
                 Color kolor2 = JColorChooser.showDialog(null,"",Color.WHITE);
                 widok.getContentPane().setBackground(kolor2);
             }
+
             System.out.println();
 
         }
