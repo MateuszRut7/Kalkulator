@@ -7,11 +7,9 @@ import java.awt.event.ActionListener;
 
 public class Kwadratowa extends JFrame implements ActionListener {
 
-    protected static JButton Bprzypisz = new JButton("Użyj: n");
-
-    private JTextField wpisujemyA = new JTextField();
-    private JTextField wpisujemyB = new JTextField();
-    private JTextField wpisujemyC = new JTextField();
+    private JTextField wpisujemyA = new JTextField("0");
+    private JTextField wpisujemyB = new JTextField("0");
+    private JTextField wpisujemyC = new JTextField("0");
 
     private JLabel tekstA = new JLabel("współczynnik a : ");
     private JLabel tekstB = new JLabel("współczynnik b : ");
@@ -82,7 +80,7 @@ public class Kwadratowa extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.setVisible(false);
         Liczymy();
-    }
+
+        }
 }

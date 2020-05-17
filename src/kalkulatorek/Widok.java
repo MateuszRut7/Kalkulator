@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class Widok extends JFrame  {
 
+
     // ustawiamy zmienne itp
     protected static String[] SLiczby = {"1","2","3","4","5","6","7","8","9","e","0","π"};
     protected static String[] Sznaki = { "+", "<=", "-","C ", "*", "= ", "/ ", "."};
