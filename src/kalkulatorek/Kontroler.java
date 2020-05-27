@@ -1,51 +1,50 @@
 package kalkulatorek;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Kontroler implements ActionListener {
+public class Kontroler{
 
-    protected void AkcjaGuzik(){
-        for (byte i = 0; i < Widok.SLiczby.length; i++) Widok.Bliczby[i].addActionListener(this);
-        for (byte i = 0; i < Widok.Sznaki.length; i++) Widok.Bznaki[i].addActionListener(this);
-        OknoPrzypisz.Bprzypisz.addActionListener(this);
+    private Widok widok;
+    private Wczytacz wczytacz;
+
+    public Kontroler(Widok widok) {
+        this.widok = widok;
+        wczytacz = new Wczytacz(widok);
     }
 
-    protected void AkcjaMenuB(){
-        Widok.mOtworz.addActionListener(this);
-        Widok.mNarzKolor.addActionListener(this);
-        Widok.mNarzPrzypisz.addActionListener(this);
-        Widok.mNarzKwadrat.addActionListener(this);
+    protected String Oblicz(String liczymy) throws ScriptException {
+        char[] pomocnicza = liczymy.toCharArray();
+
+        if (pomocnicza[0] == '0' && pomocnicza[1] != '.'){
+            liczymy = liczymy.substring(1);
+        }
+
+
+        String Se = Double.toString(Math.E);
+        String SPi = Double.toString(Math.PI);
+
+        // odpowiada za podmiane pi w normalnym przypadku
+        String actualValue = liczymy.replace("e", Se);
+        liczymy = actualValue;
+        String actualValue2 = liczymy.replace("π", SPi);
+        liczymy = actualValue2;
+
+
+        ScriptEngineManager sem = new ScriptEngineManager();
+        ScriptEngine engine = sem.getEngineByName("JavaScript");
+        Object wynik = engine.eval(liczymy);
+        liczymy = wynik.toString();
+        return liczymy;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-
-        if(source == Widok.mOtworz) Model.Wczytacz();
-
-        if (source == Widok.mNarzKolor){
-            KalkulatorMVC.pomocnicza = "kolor";
-
-        }
-
-        if (source == Widok.mNarzKwadrat) new Kwadratowa();
-
-        if(source == OknoPrzypisz.Bprzypisz) Widok.wstawPrzypisz();
-
-        if(source == Widok.mNarzPrzypisz) new OknoPrzypisz();
-
-        for (byte i = 0; i < Widok.Bliczby.length; i++) if (source == Widok.Bliczby[i]) Widok.wstawLiczby(i);
-        for (byte i = 0; i < Widok.Bznaki.length; i++) if (source == Widok.Bznaki[i]) {
-            try {
-                Widok.wstawZnaki(i);
-            } catch (ScriptException ex) {
-                ex.printStackTrace();
-            }
-        }
-
+    public void wczytaj() {
+        wczytacz.Wczytaj();
     }
 }
 
