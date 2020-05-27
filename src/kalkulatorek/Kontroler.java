@@ -4,47 +4,86 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Kontroler{
+public class Kontroler {
 
     private Widok widok;
-    private Wczytacz wczytacz;
+    private final Wczytacz wczytacz;
 
     public Kontroler(Widok widok) {
         this.widok = widok;
-        wczytacz = new Wczytacz(widok);
+        wczytacz = new Wczytacz();
     }
 
-    protected String Oblicz(String liczymy) throws ScriptException {
-        char[] pomocnicza = liczymy.toCharArray();
+    String oblicz(String liczymy) throws ScriptException {
+        char[] liczToChar = liczymy.toCharArray();
+        int  licznikZer = 0;
 
-        if (pomocnicza[0] == '0' && pomocnicza[1] != '.'){
-            liczymy = liczymy.substring(1);
+        boolean czyDziala = true;
+
+
+        try {
+            for (int i = 0; i <liczToChar.length ; i++) {
+                    if (liczToChar[i] =='e' || liczToChar[i] =='π') {
+                        if ((liczToChar[i-1] !='+' && liczToChar[i-1] !='-' && liczToChar[i-1] !='*' && liczToChar[i-1] !='/') ||
+                                (liczToChar[i+1] !='+' && liczToChar[i+1] !='-' && liczToChar[i+1] !='*' && liczToChar[i+1] !='/')){
+                            czyDziala = false;
+                            JOptionPane.showMessageDialog(null, "blad jest w tym miejscu   " + liczToChar[i] + "   obok tego jest zły znak");
+                        }
+                    }
+            }
+        }
+
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println(e);
         }
 
 
-        String Se = Double.toString(Math.E);
-        String SPi = Double.toString(Math.PI);
 
-        // odpowiada za podmiane pi w normalnym przypadku
-        String actualValue = liczymy.replace("e", Se);
-        liczymy = actualValue;
-        String actualValue2 = liczymy.replace("π", SPi);
-        liczymy = actualValue2;
+        if (czyDziala == true){
+            // naprawa błędu związanego z 0123, najpewniej problem polegał na tym, że eval rozumiał ten zapis jako ósemkowy
+            try {
+                if (liczToChar[0] == '0'){
+                    for (int i = 0; i <liczToChar.length ; i++) {
+                        if (liczToChar[i] == '0' && liczToChar[i+1] != '*' && liczToChar[i+1] != '/') {
+                            licznikZer++;
+                        }
+                        if (liczToChar[i] != '0')
+                            break;
+                    }
+                    liczymy = liczymy.substring(licznikZer);
+
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException ex){
+                System.out.println(ex);
+
+            }
 
 
-        ScriptEngineManager sem = new ScriptEngineManager();
-        ScriptEngine engine = sem.getEngineByName("JavaScript");
-        Object wynik = engine.eval(liczymy);
-        liczymy = wynik.toString();
+
+            String Se = Double.toString(Math.E);
+            String SPi = Double.toString(Math.PI);
+
+            // odpowiada za podmiane pi w normalnym przypadku
+            String actualValue = liczymy.replace("e", Se);
+            liczymy = actualValue;
+            String actualValue2 = liczymy.replace("π", SPi);
+            liczymy = actualValue2;
+
+
+            ScriptEngineManager sem = new ScriptEngineManager();
+            ScriptEngine engine = sem.getEngineByName("JavaScript");
+            Object wynik = engine.eval(liczymy);
+            liczymy = wynik.toString();
+
+        }
         return liczymy;
+
     }
 
-    public void wczytaj() {
-        wczytacz.Wczytaj();
+    public String wczytaj() {
+        return wczytacz.wczytaj();
     }
 }
 

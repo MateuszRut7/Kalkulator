@@ -7,31 +7,32 @@ import java.util.Scanner;
 
 public class Wczytacz {
 
-    private Widok widok;
+    /**
+     * Metoda odpowiadająca za wczytanie z pliku.
+     * @return Zwraca to co się znajdywało w pliku w postaci ciągu znaków
+     */
 
-    public Wczytacz(Widok widok) {
-        this.widok = widok;
-    }
 
-    public void Wczytaj(){
+    public String wczytaj() {
         JFileChooser fileChooser = new JFileChooser();
-        if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+        String result = "";
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File plik = fileChooser.getSelectedFile();
 
             try {
                 Scanner scanner = new Scanner(plik);
 
-                widok.Swynik = scanner.next();
-                widok.wyswietlWynik.setText(widok.Swynik);
+                result = scanner.next();
 
-                JOptionPane.showMessageDialog(null,"Wybrany plik to" + plik.getAbsolutePath());
+                JOptionPane.showMessageDialog(null, "Wybrany plik to" + plik.getAbsolutePath());
 
                 scanner.close();
-            }
-            catch (FileNotFoundException ex) {
+            } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(null,"nie ma takiego pliku, spróbuj jeszcze raz ");
+                JOptionPane.showMessageDialog(null, "nie ma takiego pliku, spróbuj jeszcze raz ");
             }
         }
+
+        return result;
     }
 }

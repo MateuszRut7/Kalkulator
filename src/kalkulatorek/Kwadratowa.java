@@ -2,14 +2,14 @@ package kalkulatorek;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Kwadratowa extends JFrame {
 
     private final JTextField wpisujemyA = new JTextField("0");
     private final JTextField wpisujemyB = new JTextField("0");
     private final JTextField wpisujemyC = new JTextField("0");
+
+    //konstruktor odpowiedzialny za wstawienie okiena od funkcji
 
     public Kwadratowa() {
         setSize(300, 300);
@@ -46,11 +46,11 @@ public class Kwadratowa extends JFrame {
         zatwierdz.setBounds(110, 130, 70, 60);
         zatwierdz.setBackground(Color.green);
         add(zatwierdz);
-        zatwierdz.addActionListener(e -> Liczymy());
+        zatwierdz.addActionListener(e -> liczymy());
     }
 
-    private void Liczymy() {
-
+    // obliczenia zwiazane z miejscami zerowymi funkcji kwadratowej
+    private void liczymy() {
         float A = Float.parseFloat(wpisujemyA.getText());
         float B = Float.parseFloat(wpisujemyB.getText());
         float C = Float.parseFloat(wpisujemyC.getText());

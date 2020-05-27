@@ -1,5 +1,6 @@
 package kalkulatorek;
 
+
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
@@ -8,37 +9,27 @@ import java.awt.*;
 public class Widok extends JFrame {
 
     // ustawiamy zmienne itp
-    String[] SLiczby = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "e", "0", "π"};
-    String[] Sznaki = {"+", "<=", "-", "C ", "*", "= ", "/ ", "."};
-    Color[] kolorL = {Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.YELLOW, Color.BLACK, Color.YELLOW};
-    Color[] kolorZ = {Color.BLUE, Color.RED, Color.BLUE, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.BLUE, Color.BLUE,};
-    JButton[] Bliczby = new JButton[12];
-    JButton[] Bznaki = new JButton[8];
+    private final JButton[] Bliczby = new JButton[12];
+    private final JButton[] Bznaki = new JButton[8];
+    private OknoPrzypisz oknoPrzypisz;
 
-    Kontroler kontroler = new Kontroler(this);
+    private final Kontroler kontroler = new Kontroler(this);
 
-    private Font font = new Font("System", Font.BOLD, 30);
-    String Swynik = "";
-    JTextField wyswietlWynik = new JTextField(Swynik);
-    JMenuBar menuBar = new JMenuBar();
-    JMenu menuPlik, menuNarzedzia, menuPomoc;
-    JMenuItem mOtworz, mNarzKolor, mNarzPrzypisz, mNarzKwadrat, mOprogramie;
+    private String Swynik = " ";
+    private final JTextField wyswietlWynik = new JTextField(Swynik);
 
+
+    // konstruktor odpowiedzialny za glowne okienko tego programu
     public Widok() {
-
         setSize(510, 530);
         setTitle("Kalkulator");
         setLayout(null);
 
         // wuswietla wynik
-        wyswietlWynik.setBounds(35, 20, 400, 50);
-        wyswietlWynik.setEditable(false);
-        wyswietlWynik.setFont(font);
-        add(wyswietlWynik);
-
+        setUpWynik();
 
         // wywoluje metode Guziki
-        Guziki();
+        guziki();
 
         // wywoluje metode MenuB
         MenuB();
@@ -50,43 +41,82 @@ public class Widok extends JFrame {
         getContentPane().setBackground(Color.WHITE);
     }
 
-    void MenuB() {
-        menuPlik = new JMenu("Plik");
-        menuNarzedzia = new JMenu("Narzędzia");
-        menuPomoc = new JMenu("Pomoc");
+    private void setUpWynik() {
+        wyswietlWynik.setBounds(35, 20, 400, 50);
+        wyswietlWynik.setEditable(false);
+        wyswietlWynik.setFont(Utils.font);
+        add(wyswietlWynik);
+    }
 
+    private void setOtworzButton(JMenu menuPlik) {
+        JMenuItem mOtworz = new JMenuItem("Otwórz plik ");
+
+        mOtworz.addActionListener(e -> {
+            String s = kontroler.wczytaj();
+            Swynik = s;
+            wyswietlWynik.setText(Swynik);
+        });
+
+        menuPlik.add(mOtworz);
+    }
+
+    private void setNarzKolor(JMenu menuNarzedzia) {
+        JMenuItem mNarzKolor = new JMenuItem("zmiana koloru");
+
+        mNarzKolor.addActionListener(e -> {
+            Color kolor2 = JColorChooser.showDialog(null, "", Color.WHITE);
+            getContentPane().setBackground(kolor2);
+        });
+
+        menuNarzedzia.add(mNarzKolor);
+    }
+
+    private void setNarzKwadrat(JMenu menuNarzedzia) {
+        JMenuItem mNarzKwadrat = new JMenuItem("liczenie dla funkcji kwadratowej");
+        mNarzKwadrat.addActionListener(e -> new Kwadratowa());
+        menuNarzedzia.add(mNarzKwadrat);
+    }
+
+    private void setNarzPrzypisz(JMenu menuNarzedzia) {
+        JMenuItem mNarzPrzypisz = new JMenuItem("Przypisz");
+        mNarzPrzypisz.addActionListener(e -> oknoPrzypisz = new OknoPrzypisz());
+        menuNarzedzia.add(mNarzPrzypisz);
+    }
+
+    private void MenuB() {
+        JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
+
+        JMenu menuPlik = new JMenu("Plik");
+        JMenu menuNarzedzia = new JMenu("Narzędzia");
+        JMenu menuPomoc = new JMenu("Pomoc");
+
         menuBar.add(menuPlik);
         menuBar.add(menuPomoc);
         menuBar.add(menuNarzedzia);
 
-        mOtworz = new JMenuItem("Otwórz plik ");
-        mNarzKolor = new JMenuItem("zmiana koloru");
-        mNarzPrzypisz = new JMenuItem("Przypisz");
-        mOprogramie = new JMenuItem("O programie");
-        mNarzKwadrat = new JMenuItem("liczenie dla funkcji kwadratowej");
+        setOtworzButton(menuPlik);
 
-        menuPlik.add(mOtworz);
-        menuNarzedzia.add(mNarzKolor);
-        menuNarzedzia.add(mNarzPrzypisz);
-        menuNarzedzia.add(mNarzKwadrat);
+        setNarzKolor(menuNarzedzia);
+        setNarzKwadrat(menuNarzedzia);
+        setNarzPrzypisz(menuNarzedzia);;
+
+        JMenuItem mOprogramie = new JMenuItem("O programie");
         menuPomoc.add(mOprogramie);
-
-        AkcjaMenuB();
     }
 
-    void Guziki() {
-        for (byte i = 0; i < SLiczby.length; i++) {
-            Bliczby[i] = new JButton(SLiczby[i]);
+    private void guziki() {
+        for (byte i = 0; i < Utils.SLiczby.length; i++) {
+            Bliczby[i] = new JButton(Utils.SLiczby[i]);
             add(Bliczby[i]);
         }
 
         // guziki znaków
-        for (byte i = 0; i < Sznaki.length; i++) {
-            Bznaki[i] = new JButton(Sznaki[i]);
+        for (byte i = 0; i < Utils.Sznaki.length; i++) {
+            Bznaki[i] = new JButton(Utils.Sznaki[i]);
             add(Bznaki[i]);
         }
-        AkcjaGuzik();
+        akcjaGuzik();
 
 
         // ustawia guziki liczb
@@ -94,8 +124,8 @@ public class Widok extends JFrame {
         for (byte y = 0; y < 4; y++)
             for (byte x = 0; x < 3; x++) {
                 Bliczby[index1].setBounds(35 + (x * 85), 80 + (y * 75), 80, 70);
-                Bliczby[index1].setFont(font);
-                Bliczby[index1].setForeground(kolorL[index1]);
+                Bliczby[index1].setFont(Utils.font);
+                Bliczby[index1].setForeground(Utils.kolorL[index1]);
                 index1++;
             }
 
@@ -105,27 +135,33 @@ public class Widok extends JFrame {
         for (byte y = 0; y < 4; y++) {
             for (byte x = 0; x < 2; x++) {
                 Bznaki[index2].setBounds(290 + (x * 85), 80 + (y * 75), 80, 70);
-                Bznaki[index2].setFont(font);
-                Bznaki[index2].setForeground(kolorZ[index2]);
+                Bznaki[index2].setFont(Utils.font);
+                Bznaki[index2].setForeground(Utils.kolorZ[index2]);
                 index2++;
             }
 
         }
 
         // Przypisz////////////////////////////////////////////////////////////////////////////
-        OknoPrzypisz.Bprzypisz.setBounds(35, 80 + 75 * 4, 80 * 5 + 20, 70);
-        OknoPrzypisz.Bprzypisz.setFont(font);
-        OknoPrzypisz.Bprzypisz.setForeground(Color.CYAN);
-        add(OknoPrzypisz.Bprzypisz);
+        JButton Bprzypisz = new JButton("Użyj: n");
+        Bprzypisz.setBounds(35, 80 + 75 * 4, 80 * 5 + 20, 70);
+        Bprzypisz.setFont(Utils.font);
+        Bprzypisz.setForeground(Color.CYAN);
+        add(Bprzypisz);
+        Bprzypisz.addActionListener(e -> wstawPrzypisz());
         //koniec guzikow
     }
 
-    void wstawPrzypisz() {
-        Swynik += OknoPrzypisz.Sprzypisz;
-        wyswietlWynik.setText(Swynik);
+    private void wstawPrzypisz() {
+        try{ Swynik += oknoPrzypisz.getSprzypisz();
+            wyswietlWynik.setText(Swynik);}
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Wartość 'n' nie jest jeszcze ustalona");
+            System.out.println(e);
+        }
     }
 
-    void wstawLiczby(int i) {
+    private void wstawLiczby(int i) {
         if (Swynik == "0") Swynik = Bliczby[i].getText();
         else
             Swynik += Swynik = Bliczby[i].getText();
@@ -133,18 +169,18 @@ public class Widok extends JFrame {
     }
 
 
-    void wstawZnaki(int i) throws ScriptException {
-        if (kolorZ[i] == Color.BLUE) {
+    private void wstawZnaki(int i) throws ScriptException {
+        if (Utils.kolorZ[i] == Color.BLUE) {
             if (Swynik == "0") Swynik = Bznaki[i].getText();
             else
                 Swynik += Swynik = Bznaki[i].getText();
             wyswietlWynik.setText(Swynik);
         } else if (i == 3) {
-            Swynik = "";
+            Swynik = " ";
             wyswietlWynik.setText(Swynik);
         } else if (i == 5) {
-            Swynik = kontroler.Oblicz(Swynik);
-            wyswietlWynik.setText(kontroler.Oblicz(Swynik));
+            Swynik = kontroler.oblicz(Swynik);
+            wyswietlWynik.setText(kontroler.oblicz(Swynik));
         } else if (i == 1) {
             try {
                 CharSequence actualValue = Swynik.subSequence(0, Swynik.length() - 1);
@@ -157,12 +193,12 @@ public class Widok extends JFrame {
         }
     }
 
-    void AkcjaGuzik() {
-        for (int i = 0; i < SLiczby.length; i++) {
+    private void akcjaGuzik() {
+        for (int i = 0; i < Utils.SLiczby.length; i++) {
             int finalI = i;
             Bliczby[i].addActionListener(e -> wstawLiczby(finalI));
         }
-        for (byte i = 0; i < Sznaki.length; i++) {
+        for (byte i = 0; i < Utils.Sznaki.length; i++) {
             byte finalI = i;
             Bznaki[i].addActionListener(e -> {
                 try {
@@ -173,18 +209,6 @@ public class Widok extends JFrame {
                 }
             });
         }
-        OknoPrzypisz.Bprzypisz.addActionListener(e -> wstawPrzypisz());
     }
-
-    void AkcjaMenuB() {
-        mOtworz.addActionListener(e -> kontroler.wczytaj());
-        mNarzKolor.addActionListener(e -> {
-            Color kolor2 = JColorChooser.showDialog(null, "", Color.WHITE);
-            getContentPane().setBackground(kolor2);
-        });
-        mNarzPrzypisz.addActionListener(e -> new OknoPrzypisz());
-        mNarzKwadrat.addActionListener(e -> new Kwadratowa());
-    }
-
 
 }
