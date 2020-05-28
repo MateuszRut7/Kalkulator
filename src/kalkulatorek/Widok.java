@@ -5,10 +5,10 @@ import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 
-
+// Główna klasa odpowiedzialna za widok
 public class Widok extends JFrame {
 
-    // ustawiamy zmienne itp
+    // ustawiamy stałe itp
     private final JButton[] Bliczby = new JButton[12];
     private final JButton[] Bznaki = new JButton[8];
     private OknoPrzypisz oknoPrzypisz;
@@ -25,7 +25,7 @@ public class Widok extends JFrame {
         setTitle("Kalkulator");
         setLayout(null);
 
-        // wuswietla wynik
+        // wyswietla wynik
         setUpWynik();
 
         // wywoluje metode Guziki
@@ -41,6 +41,7 @@ public class Widok extends JFrame {
         getContentPane().setBackground(Color.WHITE);
     }
 
+    // metoda odpowiedzialna za okienko wyniku
     private void setUpWynik() {
         wyswietlWynik.setBounds(35, 20, 400, 50);
         wyswietlWynik.setEditable(false);
@@ -48,6 +49,7 @@ public class Widok extends JFrame {
         add(wyswietlWynik);
     }
 
+    // metoda odpowiedzialna możliwość wczytania z pliku
     private void setOtworzButton(JMenu menuPlik) {
         JMenuItem mOtworz = new JMenuItem("Otwórz plik ");
 
@@ -59,6 +61,8 @@ public class Widok extends JFrame {
 
         menuPlik.add(mOtworz);
     }
+
+    // metoda odpowiedzialna za ustawienie koloru głównego okienka
 
     private void setNarzKolor(JMenu menuNarzedzia) {
         JMenuItem mNarzKolor = new JMenuItem("zmiana koloru");
@@ -72,18 +76,21 @@ public class Widok extends JFrame {
     }
 
 
+    // metoda odpowiedzialna za wlaczenie okienka do funkcji kwadratowej
     private void setNarzKwadrat(JMenu menuNarzedzia) {
         JMenuItem mNarzKwadrat = new JMenuItem("liczenie dla funkcji kwadratowej");
         mNarzKwadrat.addActionListener(e -> new Kwadratowa());
         menuNarzedzia.add(mNarzKwadrat);
     }
 
+    // metoda odpowiedzialna za wlaczenie okienka do przypisania wartosci do 'n'
     private void setNarzPrzypisz(JMenu menuNarzedzia) {
         JMenuItem mNarzPrzypisz = new JMenuItem("Przypisz");
         mNarzPrzypisz.addActionListener(e -> oknoPrzypisz = new OknoPrzypisz());
         menuNarzedzia.add(mNarzPrzypisz);
     }
 
+    // metoda odpowiedzialna za odpowiedni opis kalkulatora
     private void setPomProg(JMenu menuPomoc) {
         JMenuItem mOprogramie = new JMenuItem("O programie");
         mOprogramie.addActionListener(e -> JOptionPane.showMessageDialog(null, "Jest to kalkulator który potrafi uzywac znakow specjalnych takich jak e oraz π \n" +
@@ -95,6 +102,7 @@ public class Widok extends JFrame {
         menuPomoc.add(mOprogramie);
     }
 
+    // metoda odpowiedzialna za rozmieszczenie menuBar
     private void MenuB() {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -117,6 +125,7 @@ public class Widok extends JFrame {
         setPomProg(menuPomoc);
     }
 
+    // metoda odpowiedzialna za rozmieszczenie guzików
     private void guziki() {
         for (byte i = 0; i < Utils.SLiczby.length; i++) {
             Bliczby[i] = new JButton(Utils.SLiczby[i]);
@@ -164,17 +173,18 @@ public class Widok extends JFrame {
         //koniec guzikow
     }
 
+    // metoda odpowiedzialna za wstawienie wartości przypisanej do specjalnego guzika 'n'
     private void wstawPrzypisz() {
         try{ Swynik += oknoPrzypisz.getSprzypisz();
             wyswietlWynik.setText(Swynik);}
         catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Wartość 'n' nie jest jeszcze ustalona");
-            System.out.println(e);
         }
     }
 
 
 
+    // metoda odpowiedzialna za wstawianie liczb przypisanych go guzika
     private void wstawLiczby(int i) {
         if (Swynik == "0") Swynik = Bliczby[i].getText();
         else
@@ -183,6 +193,7 @@ public class Widok extends JFrame {
     }
 
 
+    // Metoda odpowiedzialne za wstawianie znaków innych niż liczby
     private void wstawZnaki(int i) throws ScriptException {
         if (Utils.kolorZ[i] == Color.BLUE) {
             if (Swynik == "0") Swynik = Bznaki[i].getText();
@@ -207,6 +218,7 @@ public class Widok extends JFrame {
         }
     }
 
+    // metoda odpowiedzialna za funkcjonalność guzików
     private void akcjaGuzik() {
         for (int i = 0; i < Utils.SLiczby.length; i++) {
             int finalI = i;
@@ -218,7 +230,6 @@ public class Widok extends JFrame {
                 try {
                     wstawZnaki(finalI);
                 } catch (ScriptException scriptException) {
-                    System.out.println(scriptException);
                     JOptionPane.showMessageDialog(null,"coś tu jest nie tak");
                 }
             });

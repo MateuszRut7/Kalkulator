@@ -28,7 +28,6 @@ public class Wczytacz {
 
                 scanner.close();
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "nie ma takiego pliku, spróbuj jeszcze raz ");
             }
         }
