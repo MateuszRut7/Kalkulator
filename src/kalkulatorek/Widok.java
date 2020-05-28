@@ -71,6 +71,7 @@ public class Widok extends JFrame {
         menuNarzedzia.add(mNarzKolor);
     }
 
+
     private void setNarzKwadrat(JMenu menuNarzedzia) {
         JMenuItem mNarzKwadrat = new JMenuItem("liczenie dla funkcji kwadratowej");
         mNarzKwadrat.addActionListener(e -> new Kwadratowa());
@@ -81,6 +82,17 @@ public class Widok extends JFrame {
         JMenuItem mNarzPrzypisz = new JMenuItem("Przypisz");
         mNarzPrzypisz.addActionListener(e -> oknoPrzypisz = new OknoPrzypisz());
         menuNarzedzia.add(mNarzPrzypisz);
+    }
+
+    private void setPomProg(JMenu menuPomoc) {
+        JMenuItem mOprogramie = new JMenuItem("O programie");
+        mOprogramie.addActionListener(e -> JOptionPane.showMessageDialog(null, "Jest to kalkulator który potrafi uzywac znakow specjalnych takich jak e oraz π \n" +
+                "można przypisać własną wartość do 'n' \n " +
+                "obliczyc miejsca zerowe funkcji kwadratowej\n"+
+                "wczytac dane z pliku  \n" +
+                " a nawet zmienić kolor na wybrany przez użytkownika ;) \n "+
+                "został on wykonany przez  zespół 6 grupa 102"));
+        menuPomoc.add(mOprogramie);
     }
 
     private void MenuB() {
@@ -101,8 +113,8 @@ public class Widok extends JFrame {
         setNarzKwadrat(menuNarzedzia);
         setNarzPrzypisz(menuNarzedzia);;
 
-        JMenuItem mOprogramie = new JMenuItem("O programie");
-        menuPomoc.add(mOprogramie);
+
+        setPomProg(menuPomoc);
     }
 
     private void guziki() {
@@ -160,6 +172,8 @@ public class Widok extends JFrame {
             System.out.println(e);
         }
     }
+
+
 
     private void wstawLiczby(int i) {
         if (Swynik == "0") Swynik = Bliczby[i].getText();

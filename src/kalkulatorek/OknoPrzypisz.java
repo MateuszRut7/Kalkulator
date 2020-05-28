@@ -59,8 +59,8 @@ public class OknoPrzypisz extends JFrame {
         char[] pom = doFiltrowania.toCharArray();
 
         for (int i = 0; i < pom.length; i++) {
-            if (pom[i] != '0' && pom[i] != '1' && pom[i] != ' ' && pom[i] != '2' && pom[i] != '3' && pom[i] != '4' && pom[i] != '5' && pom[i] != '6' && pom[i] != '7' && pom[i] != '8' && pom[i] != '9' && pom[i] != 'e' && pom[i] != 'π' && pom[i] != '+' && pom[i] != '-' && pom[i] != '*' && pom[i] != '/' && pom[i] != '.') {
-                JOptionPane.showMessageDialog(null, "niestety używasz złych znaków sprawdź jeszcze raz czy wszystko zostało dobrze wpisane. Pamiętaj by używać kropki a nie przecinka");
+            if (pom[i] != '0' && pom[i] != '1' && pom[i] != '2' && pom[i] != '3' && pom[i] != '4' && pom[i] != '5' && pom[i] != '6' && pom[i] != '7' && pom[i] != '8' && pom[i] != '9' && pom[i] != 'e' && pom[i] != 'π' && pom[i] != '+' && pom[i] != '-' && pom[i] != '*' && pom[i] != '/' && pom[i] != '.') {
+                JOptionPane.showMessageDialog(null, "niestety używasz złych znaków sprawdź jeszcze raz czy wszystko zostało dobrze wpisane. Pamiętaj by używać kropki a nie przecinka oraz by nie uzywac spacji");
                 doFiltrowania = "0";
                 break;
             } else {
