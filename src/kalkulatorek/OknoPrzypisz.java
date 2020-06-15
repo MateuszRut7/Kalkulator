@@ -2,6 +2,7 @@ package kalkulatorek;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.regex.Pattern;
 
 
 public class OknoPrzypisz extends JFrame {
@@ -40,6 +41,7 @@ public class OknoPrzypisz extends JFrame {
 
     /**
      * Metoda get zajmująca się przypisaniem
+     *
      * @return zwraca to co chcemy przypisać
      */
 
@@ -51,22 +53,21 @@ public class OknoPrzypisz extends JFrame {
 
     /**
      * Metoda zajmująca się sprawdzaniem czy to co chcemy przypisać ma poprawne znaki
+     *
      * @return Zwraca to co chcemy przypisać pod warunkiem, iż nie zostały użyte niedozwolone znaki
      */
 
 
     private String filtr(String doFiltrowania) {
-        char[] pom = doFiltrowania.toCharArray();
 
-        for (int i = 0; i < pom.length; i++) {
-            if (pom[i] != '0' && pom[i] != '1' && pom[i] != '2' && pom[i] != '3' && pom[i] != '4' && pom[i] != '5' && pom[i] != '6' && pom[i] != '7' && pom[i] != '8' && pom[i] != '9' && pom[i] != 'e' && pom[i] != 'π' && pom[i] != '+' && pom[i] != '-' && pom[i] != '*' && pom[i] != '/' && pom[i] != '.') {
-                JOptionPane.showMessageDialog(null, "niestety używasz złych znaków sprawdź jeszcze raz czy wszystko zostało dobrze wpisane. Pamiętaj by używać kropki a nie przecinka oraz by nie uzywac spacji");
-                doFiltrowania = "0";
-                break;
-            } else {
-                doFiltrowania = wpisujemy.getText();
-            }
+        final Pattern pattern = Pattern.compile("^[-]?((((\\d\\.)|([1-9]+\\.?))\\d*)|0)$");
+        if (!pattern.matcher(doFiltrowania).matches()) {
+            JOptionPane.showMessageDialog(null, "niestety używasz złych znaków sprawdź jeszcze raz czy wszystko zostało dobrze wpisane. Pamiętaj by używać kropki a nie przecinka oraz by nie uzywac spacji");
+            doFiltrowania = "0";
+        } else {
+            doFiltrowania = wpisujemy.getText();
         }
+
         JOptionPane.showMessageDialog(null, "wartość n wynosi: " + doFiltrowania);
 
         return doFiltrowania;

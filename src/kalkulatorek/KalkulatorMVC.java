@@ -1,6 +1,4 @@
-package kalkulatorek;
-
-// odpowiada za uruchomienie aplikacji tworząc obiekt klasy Widok co uruchamia konstruktor w Widoku
+package kalkulatorek;// odpowiada za uruchomienie aplikacji tworząc obiekt klasy Widok co uruchamia konstruktor w Widoku
 
 public class KalkulatorMVC {
 

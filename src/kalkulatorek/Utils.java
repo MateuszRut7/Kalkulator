@@ -7,7 +7,7 @@ import java.awt.*;
 public class Utils {
     public static final String[] SLiczby = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "e", "0", "π"};
 
-    public static final String[] Sznaki = {"+", "<=", "-", "C ", "*", "= ", "/ ", "."};
+    public static final String[] Sznaki = {"+", "<=", "-", "C ", "*", "=", "/", "."};
 
     public static final Color[] kolorL = {Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.YELLOW, Color.BLACK, Color.YELLOW};
 

@@ -1,6 +1,5 @@
 package kalkulatorek;
 
-
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,7 @@ public class Widok extends JFrame {
 
     private final Kontroler kontroler = new Kontroler(this);
 
-    private String Swynik = " ";
+    private String Swynik = "";
     private final JTextField wyswietlWynik = new JTextField(Swynik);
 
 
@@ -93,11 +92,11 @@ public class Widok extends JFrame {
     // metoda odpowiedzialna za odpowiedni opis kalkulatora
     private void setPomProg(JMenu menuPomoc) {
         JMenuItem mOprogramie = new JMenuItem("O programie");
-        mOprogramie.addActionListener(e -> JOptionPane.showMessageDialog(null, "Jest to kalkulator który potrafi uzywac znakow specjalnych takich jak e oraz π \n" +
-                "można przypisać własną wartość do 'n' \n " +
+        mOprogramie.addActionListener(e -> JOptionPane.showMessageDialog(null, "Jest to kalkulator który potrafi uzywac znakow specjalnych takich jak e oraz π\n" +
+                "można przypisać własną wartość do 'n'\n" +
                 "obliczyc miejsca zerowe funkcji kwadratowej\n"+
                 "wczytac dane z pliku  \n" +
-                " a nawet zmienić kolor na wybrany przez użytkownika ;) \n "+
+                "a nawet zmienić kolor na wybrany przez użytkownika ;)\n"+
                 "został on wykonany przez  zespół 6 grupa 102"));
         menuPomoc.add(mOprogramie);
     }
@@ -201,11 +200,11 @@ public class Widok extends JFrame {
                 Swynik += Swynik = Bznaki[i].getText();
             wyswietlWynik.setText(Swynik);
         } else if (i == 3) {
-            Swynik = " ";
+            Swynik = "";
             wyswietlWynik.setText(Swynik);
         } else if (i == 5) {
             Swynik = kontroler.oblicz(Swynik);
-            wyswietlWynik.setText(kontroler.oblicz(Swynik));
+            wyswietlWynik.setText(Swynik);
         } else if (i == 1) {
             try {
                 CharSequence actualValue = Swynik.subSequence(0, Swynik.length() - 1);
