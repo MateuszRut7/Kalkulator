@@ -24,7 +24,7 @@ public class Widok extends JFrame {
         setTitle("Kalkulator");
         setLayout(null);
 
-        // wyswietla wynik
+        // wywołuje metode setUpWynik
         setUpWynik();
 
         // wywoluje metode Guziki
