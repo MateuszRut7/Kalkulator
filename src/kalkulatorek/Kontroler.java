@@ -40,7 +40,7 @@ public class Kontroler {
         }
 
 
-        // oblicza jesc jest e oraz pi jest dobrze wstawione
+        // oblicza e oraz pi jeśli są dobrze wstawione
 
         if (czyDziala == true) {
 
